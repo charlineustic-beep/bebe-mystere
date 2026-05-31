@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bébé Mystère</title>
+<style>
+body{margin:0;font-family:'Segoe UI',sans-serif;background:#f8f4ed;color:#4f5b4a;text-align:center}
+.hero{padding:20px}
+.hero img{width:90%;max-width:500px;border-radius:24px;box-shadow:0 10px 25px rgba(0,0,0,.15)}
+.container{padding:25px;max-width:600px;margin:auto}
+h1{font-size:2.3rem;margin-top:20px;color:#66735f}
+.subtitle{font-size:1.2rem;margin-bottom:30px}
+input{width:90%;padding:15px;border-radius:14px;border:none;background:white;font-size:1rem;margin-bottom:20px}
+.buttons{display:flex;flex-direction:column;gap:15px}
+button{padding:18px;font-size:1.1rem;border:none;border-radius:18px;cursor:pointer;transition:.2s}
+button:hover{transform:scale(1.03)}
+.boy{background:#a9c8b1;color:white}
+.girl{background:#d9b8b0;color:white}
+#result{display:none;padding:30px}
+.win{color:#3f8b4d;font-size:2.5rem;font-weight:bold}
+.lose{color:#c46d6d;font-size:2.5rem;font-weight:bold}
+footer{margin-top:30px;padding-bottom:30px;color:#999}
+</style>
+</head>
+<body>
+<div class="hero">
+<img src="echographie.jpg" alt="Échographie">
+</div>
+<div class="container">
+<div id="question">
+<h1>👶 Bébé Mystère</h1>
+<p class="subtitle">Éléna et Gabrielle vont accueillir...</p>
+<input type="text" id="prenom" placeholder="Votre prénom">
+<div class="buttons">
+<button class="boy" onclick="vote('Petit frère')">👦 Un petit frère</button>
+<button class="girl" onclick="vote('Petite sœur')">👧 Une petite sœur</button>
+</div>
+</div>
+<div id="result">
+<div id="message"></div>
+<p>Merci pour votre participation ❤️</p>
+</div>
+<footer>🌿 Faites votre pronostic 🌿</footer>
+</div>
+<script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyMnsVNGDhZjmWpHPajYQinusGJsQi1z3GXJlqHmkJXfFOktGWjA0FSbOcUyj94ciHT/exec";
+function vote(choix){
+const prenom=document.getElementById("prenom").value||"Anonyme";
+fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({prenom:prenom,vote:choix})});
+document.getElementById("question").style.display="none";
+document.getElementById("result").style.display="block";
+if(choix==="Petit frère"){
+document.getElementById("message").innerHTML='<div class="win">🎉 GAGNÉ !</div><p>Vous aviez choisi :<br><br>👦 Un petit frère</p>';
+}else{
+document.getElementById("message").innerHTML='<div class="lose">🌸 PERDU !</div><p>Vous aviez choisi :<br><br>👧 Une petite sœur</p>';
+}
+}
+</script>
+</body>
+</html>
